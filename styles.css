@@ -1,0 +1,33 @@
+@font-face {
+    font-family: 'im_fell_english_scregular';
+    src: url('imfellenglishsc-regular-webfont.woff2') format('woff2'),
+         url('imfellenglishsc-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+h1 {
+    color: white;
+    font-family: 'im_fell_english_scregular',serif;
+    text-align: center;
+    font-size: 5rem;
+    position: relative;
+	height: 100px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-top: 0%;
+}
+
+body {
+    background-image: url("background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+html, body {
+    height: 100%;
+    background-color: black;
+}
+

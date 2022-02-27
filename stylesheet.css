@@ -1,0 +1,9 @@
+
+@font-face {
+    font-family: 'im_fell_english_scregular';
+    src: url('imfellenglishsc-regular-webfont.woff2') format('woff2'),
+         url('imfellenglishsc-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
