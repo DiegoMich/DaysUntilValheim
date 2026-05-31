@@ -1,17 +1,66 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Days until Valheim</title>
-        <link rel="stylesheet" href="styles.css">
-        <script src="index.js"></script>
-    </head>
-    <body>
-        <h1>Days until Valheim: </h1>
-        <div class="progress-container">
-            <div class="progress-wrapper">
-                <progress id="progress-bar" value="0" max="90"></progress>
-                <img id="progress-marker" src="marker.png" alt="Marker">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Days Until Valheim</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div id="snow" aria-hidden="true"></div>
+    <div class="bg-overlay" aria-hidden="true"></div>
+    <div class="vignette"   aria-hidden="true"></div>
+
+    <main class="page">
+        <div class="card">
+
+            <div class="rune-row" aria-hidden="true">
+                <span class="rune-line"></span>
+                <span class="rune-text">ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ ᚷ ᚹ</span>
+                <span class="rune-line"></span>
             </div>
+
+            <h1 class="title">Days Until<br>Valheim</h1>
+
+            <div class="rune-row secondary" aria-hidden="true">
+                <span class="rune-line"></span>
+                <span class="rune-text small">ᛏ ᛒ ᛖ ᛗ ᛚ ᛜ ᛞ ᛟ</span>
+                <span class="rune-line"></span>
+            </div>
+
+            <div class="counter">
+                <div class="number-row">
+                    <span id="days-number" class="days-number">—</span>
+                    <span class="days-label">DAYS</span>
+                </div>
+                <p class="counter-sub">until the Southern Winter Solstice</p>
+                <p id="target-date" class="counter-date">June 21</p>
+            </div>
+
+            <div class="bar-section">
+                <div class="bar-wrapper" id="bar-wrapper">
+                    <div class="marker-wrap" id="marker-wrap">
+                        <img src="marker.png" alt="" class="marker-img" id="progress-marker">
+                    </div>
+                    <div id="steps-bar" class="steps-bar"></div>
+                </div>
+                <div class="bar-stats">
+                    <span id="stat-elapsed">— days elapsed</span>
+                    <span class="stat-sep" aria-hidden="true">᛫</span>
+                    <span id="stat-remaining">— days to solstice</span>
+                </div>
+            </div>
+
+            <div class="rune-row dim" aria-hidden="true">
+                <span class="rune-line"></span>
+                <span class="rune-text small">ᛠ ᛡ ᛢ ᛣ ᛤ ᛥ ᛦ</span>
+                <span class="rune-line"></span>
+            </div>
+
         </div>
-    </body>
+    </main>
+
+    <script src="index.js"></script>
+</body>
 </html>

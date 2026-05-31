@@ -1,83 +1,377 @@
+/* ── Font ─────────────────────────────────────────────────── */
 @font-face {
-    font-family: 'im_fell_english_scregular';
+    font-family: 'NorseFell';
     src: url('imfellenglishsc-regular-webfont.woff2') format('woff2'),
          url('imfellenglishsc-regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-
 }
 
-h1 {
-    color: rgb(233, 233, 233);
-    font-family: 'im_fell_english_scregular',serif;
-    text-align: center;
-    font-size: 5rem;
-    position: relative;
-	height: 100px;
-    top: 25%;
-    transform: translateY(-50%);
-    margin-top: 0%;
-    text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); /* Adds a 10px shadow */
+/* ── Variables ────────────────────────────────────────────── */
+:root {
+    --void:          #03060e;
+    --deep:          #070f1e;
+    --sea:           #0c1929;
+    --steel:         #172536;
+    --glacier:       #243d57;
+    --mist:          #3a5a7a;
+    --silver:        #7090aa;
+    --ghost:         #a8bece;
+    --frost:         #c8dae6;
+    --snow:          #e8f0f6;
+    --gold:          #9a7030;
+    --gold-bright:   #c49040;
+    --bar-elapsed-a: #121e2c;
+    --bar-elapsed-b: #1e3248;
+    --bar-future-a:  #2e5570;
+    --bar-future-b:  #4a80a0;
+    --glow:          rgba(100, 170, 210, 0.32);
+    --glow-strong:   rgba(100, 170, 210, 0.58);
 }
 
+/* ── Reset ────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Base ─────────────────────────────────────────────────── */
 html, body {
-    height: 100%; /* Ensure the page takes up the full height of the browser */
-    margin: 0; /* Remove default margin */
-    overflow: hidden; /* Prevent scrolling */
-    background-color: black; /* Fallback background color */
+    height: 100%;
+    overflow: hidden;
+    background: var(--void);
 }
 
 body {
-    background-image: url("background.jpg");
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size: cover; /* Ensures the image covers the entire screen while maintaining aspect ratio */
-    background-position: center; /* Centers the image */
 }
 
-.progress-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Center vertically */
+/* ── Overlays ─────────────────────────────────────────────── */
+.bg-overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(3,  6, 14, 0.52) 0%,
+        rgba(7, 15, 30, 0.68) 45%,
+        rgba(3,  6, 14, 0.82) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
 }
 
-.progress-wrapper {
-    position: relative;
-    width: 75%; /* 75% of the page width */
+.vignette {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(
+        ellipse 80% 80% at 50% 50%,
+        transparent 30%,
+        rgba(2, 4, 10, 0.78) 100%
+    );
+    pointer-events: none;
+    z-index: 2;
 }
 
-progress {
-    width: 100%;
-    height: 20px;
-    border: none;
-    border-radius: 10px;
-    background-color: #333; /* Dark grey background */
+/* ── Snow ─────────────────────────────────────────────────── */
+#snow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
     overflow: hidden;
 }
 
-progress::-webkit-progress-bar {
-    background-color: #333; /* Dark grey background */
-    border-radius: 10px;
+@keyframes snowFall {
+    0%   { transform: translateY(-15px) translateX(0px); opacity: 0; }
+    7%   { opacity: 1; }
+    93%  { opacity: 0.55; }
+    100% { transform: translateY(calc(100vh + 20px)) translateX(30px); opacity: 0; }
 }
 
-progress::-webkit-progress-value {
-    background-color: #4caf50; /* Green progress */
-    border-radius: 10px;
-}
-
-progress::-moz-progress-bar {
-    background-color: #4caf50; /* Green progress for Firefox */
-    border-radius: 10px;
-}
-
-#progress-marker {
+.snowflake {
     position: absolute;
-    top: -50px; /* Adjust to position the marker above the progress bar */
+    top: 0;
+    border-radius: 50%;
+    background: rgba(208, 232, 248, 0.82);
+    animation: snowFall linear infinite;
+    pointer-events: none;
+}
+
+/* ── Layout ───────────────────────────────────────────────── */
+.page {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+/* ── Card ─────────────────────────────────────────────────── */
+.card {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 2rem 2.8rem 1.8rem;
+    position: relative;
+    background: rgba(6, 11, 22, 0.60);
+    border: 1px solid rgba(90, 140, 180, 0.18);
+    border-top-color: rgba(130, 175, 215, 0.30);
+    box-shadow:
+        0 0 0 1px rgba(25, 65, 105, 0.12),
+        0 30px 80px rgba(0, 0, 0, 0.88),
+        inset 0 1px 0 rgba(160, 210, 240, 0.10),
+        inset 0 -1px 0 rgba(10, 30, 55, 0.45);
+    backdrop-filter: blur(10px) saturate(0.85);
+}
+
+/* Corner accent marks */
+.card::before,
+.card::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-color: rgba(154, 112, 48, 0.45);
+    border-style: solid;
+}
+
+.card::before { top: -1px;    left: -1px;    border-width: 2px 0 0 2px; }
+.card::after  { bottom: -1px; right: -1px;   border-width: 0 2px 2px 0; }
+
+/* ── Rune rows ────────────────────────────────────────────── */
+.rune-row {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    width: 100%;
+}
+
+.rune-row.secondary { opacity: 0.60; }
+.rune-row.dim       { opacity: 0.30; }
+
+.rune-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(154, 112, 48, 0.50) 25%,
+        rgba(196, 144, 64, 0.75) 50%,
+        rgba(154, 112, 48, 0.50) 75%,
+        transparent
+    );
+}
+
+.rune-text {
+    font-family: serif;
+    color: var(--gold-bright);
+    font-size: 0.98rem;
+    letter-spacing: 0.30em;
+    white-space: nowrap;
+    text-shadow: 0 0 10px rgba(196, 144, 64, 0.48);
+    user-select: none;
+}
+
+.rune-text.small { font-size: 0.76rem; letter-spacing: 0.22em; }
+
+/* ── Title ────────────────────────────────────────────────── */
+.title {
+    font-family: 'NorseFell', serif;
+    font-size: clamp(2.2rem, 4.8vw, 3.4rem);
+    color: var(--snow);
+    text-align: center;
+    line-height: 1.18;
+    letter-spacing: 0.03em;
+    text-shadow:
+        0 0 40px var(--glow),
+        0 5px 18px rgba(0, 0, 0, 0.90),
+        0 1px 0 rgba(200, 228, 248, 0.12);
+}
+
+/* ── Counter ──────────────────────────────────────────────── */
+.counter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.18rem;
+}
+
+.number-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    line-height: 1;
+}
+
+@keyframes icePulse {
+    0%, 100% {
+        text-shadow:
+            0 0 28px var(--glow),
+            0 0 75px rgba(80, 148, 198, 0.14),
+            0 6px 22px rgba(0, 0, 0, 0.96);
+    }
+    50% {
+        text-shadow:
+            0 0 40px var(--glow-strong),
+            0 0 100px rgba(80, 148, 198, 0.26),
+            0 6px 22px rgba(0, 0, 0, 0.96);
+    }
+}
+
+.days-number {
+    font-family: 'NorseFell', serif;
+    font-size: clamp(5rem, 14vw, 9.5rem);
+    color: var(--snow);
+    line-height: 1;
+    display: block;
+    min-width: 2.5ch;
+    text-align: center;
+    animation: icePulse 4.5s ease-in-out infinite;
+}
+
+.days-label {
+    font-family: 'NorseFell', serif;
+    font-size: clamp(1.1rem, 2.4vw, 1.75rem);
+    color: var(--silver);
+    letter-spacing: 0.38em;
+    align-self: flex-end;
+    padding-bottom: 0.18em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.80);
+}
+
+.counter-sub {
+    font-family: 'NorseFell', serif;
+    font-size: clamp(0.80rem, 1.4vw, 1rem);
+    color: var(--ghost);
+    letter-spacing: 0.06em;
+    opacity: 0.82;
+    text-align: center;
+}
+
+.counter-date {
+    font-family: 'NorseFell', serif;
+    font-size: clamp(0.76rem, 1.3vw, 0.94rem);
+    color: var(--gold-bright);
+    letter-spacing: 0.16em;
+    text-shadow: 0 0 14px rgba(196, 144, 64, 0.44);
+}
+
+/* ── Progress bar section ─────────────────────────────────── */
+.bar-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding-top: 72px; /* headroom for the floating marker */
+}
+
+.bar-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: visible;
+}
+
+/* ── Marker ───────────────────────────────────────────────── */
+.marker-wrap {
+    position: absolute;
+    top: -72px;
     left: 0;
     transform: translateX(-50%);
-    width: 100px; /* Adjust marker size */
-    height: 100px;
-    pointer-events: none; /* Prevent interaction with the marker */
+    pointer-events: none;
+    z-index: 6;
+    transition: left 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+@keyframes markerBob {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-6px); }
+}
+
+.marker-img {
+    display: block;
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    animation: markerBob 3.4s ease-in-out infinite;
+    filter:
+        drop-shadow(0 5px 14px rgba(0, 0, 0, 0.92))
+        drop-shadow(0 0 18px rgba(100, 168, 210, 0.40));
+}
+
+/* ── Step cells ───────────────────────────────────────────── */
+@keyframes cellReveal {
+    from { opacity: 0; transform: scaleY(0.15); }
+    to   { opacity: 1; transform: scaleY(1); }
+}
+
+.steps-bar {
+    display: flex;
+    gap: 2px;
+    height: 22px;
+    width: 100%;
+}
+
+.step-cell {
+    flex: 1;
+    border-radius: 2px;
+    transform-origin: bottom;
+    animation: cellReveal 0.35s ease backwards;
+}
+
+.step-cell.elapsed {
+    background: linear-gradient(to top, var(--bar-elapsed-a), var(--bar-elapsed-b));
+    box-shadow: inset 0 1px 0 rgba(100, 148, 190, 0.22);
+}
+
+.step-cell.remaining {
+    background: linear-gradient(to top, var(--bar-future-a), var(--bar-future-b));
+    box-shadow:
+        inset 0 1px 0 rgba(220, 246, 255, 0.38),
+        0 0 5px rgba(74, 128, 160, 0.20);
+}
+
+.step-cell.milestone {
+    height: 30px;
+    margin-top: -4px;
+}
+
+/* ── Bar stat labels ──────────────────────────────────────── */
+.bar-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'NorseFell', serif;
+    font-size: clamp(0.70rem, 1.2vw, 0.86rem);
+    color: var(--silver);
+    letter-spacing: 0.06em;
+    opacity: 0.80;
+}
+
+.stat-sep {
+    color: var(--gold);
+    font-size: 1.25em;
+    opacity: 0.55;
+    user-select: none;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 600px) {
+    .card {
+        padding: 1.4rem 1.4rem 1.2rem;
+        gap: 0.40rem;
+    }
+    .rune-text {
+        font-size: 0.70rem;
+        letter-spacing: 0.16em;
+    }
+    .rune-text.small {
+        font-size: 0.60rem;
+        letter-spacing: 0.12em;
+    }
+}
